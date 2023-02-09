@@ -3,16 +3,16 @@ if (!function_exists('google_image_resize')) {
     /**
      * Function google_image_resize
      *
-     * @param string   $url
-     * @param int      $width
-     * @param int|null $height
+     * @param string          $url
+     * @param string|int      $width
+     * @param string|int|null $height
      *
      * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 07/27/2021 37:48
      */
-    function google_image_resize($url = '', $width = 100, $height = null)
+    function google_image_resize(string $url = '', $width = 100, $height = null): string
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::googleGadgetsProxy($url, $width, $height);
     }
@@ -26,7 +26,7 @@ if (!function_exists('google_image_proxy_dns_prefetch')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/15/2021 36:03
      */
-    function google_image_proxy_dns_prefetch()
+    function google_image_proxy_dns_prefetch(): string
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::googleGadgetsProxyDnsPrefetch();
     }
@@ -43,7 +43,7 @@ if (!function_exists('wordpress_proxy')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 07/27/2021 38:04
      */
-    function wordpress_proxy($imageUrl = '', $server = 'i3')
+    function wordpress_proxy(string $imageUrl = '', string $server = 'i3'): string
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::wordpressProxy($imageUrl, $server);
     }
@@ -57,7 +57,7 @@ if (!function_exists('wordpress_proxy_dns_prefetch')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/15/2021 36:15
      */
-    function wordpress_proxy_dns_prefetch()
+    function wordpress_proxy_dns_prefetch(): string
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::wordpressProxyDnsPrefetch();
     }
@@ -66,16 +66,16 @@ if (!function_exists('bear_framework_image_url')) {
     /**
      * Function bear_framework_image_url
      *
-     * @param $input
-     * @param $server
-     * @param $base
+     * @param string $input
+     * @param        $server
+     * @param        $base
      *
      * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 15/06/2022 54:18
      */
-    function bear_framework_image_url($input = '', $server = '', $base = 'live')
+    function bear_framework_image_url(string $input = '', $server = '', $base = 'live'): string
     {
         $images_url = trim($input);
         if (function_exists('config_item') && !empty($images_url)) {
@@ -111,16 +111,16 @@ if (!function_exists('bear_framework_create_image_thumbnail')) {
     /**
      * Function bear_framework_create_image_thumbnail
      *
-     * @param $url
-     * @param $width
-     * @param $height
+     * @param string $url
+     * @param int    $width
+     * @param int    $height
      *
-     * @return mixed|string|null
+     * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 15/06/2022 03:06
      */
-    function bear_framework_create_image_thumbnail($url = '', $width = 100, $height = 100)
+    function bear_framework_create_image_thumbnail(string $url = '', int $width = 100, int $height = 100)
     {
         return create_image_thumbnail($url, $width, $height);
     }
@@ -129,16 +129,16 @@ if (!function_exists('create_image_thumbnail')) {
     /**
      * Function create_image_thumbnail
      *
-     * @param $url
-     * @param $width
-     * @param $height
+     * @param string $url
+     * @param int    $width
+     * @param int    $height
      *
-     * @return mixed|string|null
+     * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 15/06/2022 03:06
      */
-    function create_image_thumbnail($url = '', $width = 100, $height = 100)
+    function create_image_thumbnail(string $url = '', int $width = 100, int $height = 100)
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::createThumbnail($url, $width, $height);
     }

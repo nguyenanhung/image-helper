@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '1.0.0';
+    const VERSION = '2.0.0';
 
     /**
      * Function getVersion
@@ -31,7 +31,7 @@ class ImageHelper
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/18/2021 36:14
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return self::VERSION;
     }
@@ -39,16 +39,16 @@ class ImageHelper
     /**
      * Function googleGadgetsProxy
      *
-     * @param string   $url
-     * @param int      $width
-     * @param null|int $height
+     * @param string          $url
+     * @param string|int      $width
+     * @param string|int|null $height
      *
      * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/20/2021 11:20
      */
-    public static function googleGadgetsProxy($url = '', $width = 100, $height = null)
+    public static function googleGadgetsProxy(string $url = '', $width = 100, $height = null): string
     {
         $proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy';
         $proxyContainer = 'focus';
@@ -76,7 +76,7 @@ class ImageHelper
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/15/2021 34:32
      */
-    public static function googleGadgetsProxyDnsPrefetch()
+    public static function googleGadgetsProxyDnsPrefetch(): string
     {
         return "<link href='//images1-focus-opensocial.googleusercontent.com' rel='dns-prefetch' />" . PHP_EOL;
     }
@@ -92,7 +92,7 @@ class ImageHelper
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/20/2021 11:39
      */
-    public static function wordpressProxy($imageUrl = '', $server = 'i3')
+    public static function wordpressProxy(string $imageUrl = '', string $server = 'i3'): string
     {
         $imageUrl = str_replace(array('https://', 'http://', '//'), '', $imageUrl);
         $url = 'https://' . trim($server) . '.wp.com/' . $imageUrl;
@@ -108,7 +108,7 @@ class ImageHelper
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/15/2021 33:45
      */
-    public static function wordpressProxyDnsPrefetch()
+    public static function wordpressProxyDnsPrefetch(): string
     {
         $html = "<link href='//i0.wp.com' rel='dns-prefetch' />" . PHP_EOL;
         $html .= "<link href='//i1.wp.com' rel='dns-prefetch' />" . PHP_EOL;
@@ -121,16 +121,16 @@ class ImageHelper
     /**
      * Function createThumbnail
      *
-     * @param $url
-     * @param $width
-     * @param $height
+     * @param string $url
+     * @param int    $width
+     * @param int    $height
      *
-     * @return mixed|string|null
+     * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 15/06/2022 00:20
      */
-    public static function createThumbnail($url = '', $width = 100, $height = 100)
+    public static function createThumbnail(string $url = '', int $width = 100, int $height = 100)
     {
         try {
             if (function_exists('base_url') && function_exists('config_item') && class_exists('nguyenanhung\MyImage\ImageCache')) {
