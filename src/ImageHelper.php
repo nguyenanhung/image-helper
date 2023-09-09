@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.1';
+    const VERSION = '2.0.2';
 
     /**
      * Function getVersion
@@ -39,8 +39,8 @@ class ImageHelper
     /**
      * Function googleGadgetsProxy
      *
-     * @param string          $url
-     * @param string|int      $width
+     * @param string $url
+     * @param string|int $width
      * @param string|int|null $height
      *
      * @return string
@@ -50,10 +50,12 @@ class ImageHelper
      */
     public static function googleGadgetsProxy(string $url = '', $width = 100, $height = null): string
     {
+        if (strpos($url, 'media.anhp.vn')) {
+            return trim($url);
+        }
         $proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy';
         $proxyContainer = 'focus';
         $proxyRefresh = 2592000;
-        $url = str_replace('media.anhp.vn:8081', 'media.anhp.vn', $url);
         // Start
         $params = array();
         $params['url'] = $url;
@@ -95,8 +97,10 @@ class ImageHelper
      */
     public static function wordpressProxy(string $imageUrl = '', string $server = 'i3'): string
     {
+        if (strpos($imageUrl, 'media.anhp.vn')) {
+            return trim($imageUrl);
+        }
         $imageUrl = str_replace(array('https://', 'http://', '//'), '', $imageUrl);
-        $imageUrl = str_replace('media.anhp.vn:8081', 'media.anhp.vn', $imageUrl);
         $url = 'https://' . trim($server) . '.wp.com/' . $imageUrl;
 
         return trim($url);
@@ -124,8 +128,8 @@ class ImageHelper
      * Function createThumbnail
      *
      * @param string $url
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
