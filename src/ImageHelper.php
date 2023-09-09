@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '1.0.1';
+    const VERSION = '1.0.2';
 
     /**
      * Function getVersion
@@ -50,10 +50,12 @@ class ImageHelper
      */
     public static function googleGadgetsProxy($url = '', $width = 100, $height = null)
     {
+        if (strpos($url, 'media.anhp.vn')) {
+            return trim($url);
+        }
         $proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy';
         $proxyContainer = 'focus';
         $proxyRefresh = 2592000;
-        $url = str_replace('media.anhp.vn:8081', 'media.anhp.vn', $url);
         // Start
         $params = array();
         $params['url'] = $url;
@@ -95,6 +97,9 @@ class ImageHelper
      */
     public static function wordpressProxy($imageUrl = '', $server = 'i3')
     {
+        if (strpos($imageUrl, 'media.anhp.vn')) {
+            return trim($imageUrl);
+        }
         $imageUrl = str_replace(array('https://', 'http://', '//'), '', $imageUrl);
         $imageUrl = str_replace('media.anhp.vn:8081', 'media.anhp.vn', $imageUrl);
         $url = 'https://' . trim($server) . '.wp.com/' . $imageUrl;
