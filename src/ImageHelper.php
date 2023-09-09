@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.0';
+    const VERSION = '2.0.1';
 
     /**
      * Function getVersion
@@ -53,6 +53,7 @@ class ImageHelper
         $proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy';
         $proxyContainer = 'focus';
         $proxyRefresh = 2592000;
+        $url = str_replace('media.anhp.vn:8081', 'media.anhp.vn', $url);
         // Start
         $params = array();
         $params['url'] = $url;
@@ -95,6 +96,7 @@ class ImageHelper
     public static function wordpressProxy(string $imageUrl = '', string $server = 'i3'): string
     {
         $imageUrl = str_replace(array('https://', 'http://', '//'), '', $imageUrl);
+        $imageUrl = str_replace('media.anhp.vn:8081', 'media.anhp.vn', $imageUrl);
         $url = 'https://' . trim($server) . '.wp.com/' . $imageUrl;
 
         return trim($url);
