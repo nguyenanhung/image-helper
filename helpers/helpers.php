@@ -15,7 +15,7 @@ if (!function_exists('google_image_resize')) {
      */
     function google_image_resize($url = '', $width = 100, $height = null, $server = 'images1')
     {
-        return nguyenanhung\Libraries\ImageHelper\ImageHelper::googleGadgetsProxy($url, $width, $height);
+        return nguyenanhung\Libraries\ImageHelper\ImageHelper::googleGadgetsProxy($url, $width, $height, $server);
     }
 }
 if (!function_exists('google_image_proxy_dns_prefetch')) {
