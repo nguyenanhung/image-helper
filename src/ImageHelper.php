@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.2';
+    const VERSION = '2.0.3';
 
     /**
      * Function getVersion
@@ -37,29 +37,58 @@ class ImageHelper
     }
 
     /**
+     * Function googleGadgetsProxyServer
+     *
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return string[]|array
+     */
+    public static function googleGadgetsProxyServerList(): array
+    {
+        return array('images1', 'images2', 'images3', 'images4', 'images5', 'images6', 'images7', 'images8', 'images9', 'images10');
+    }
+
+    /**
+     * Function wordpressProxyProxyServerList
+     *
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return string[]|array
+     */
+    public static function wordpressProxyProxyServerList(): array
+    {
+        return array('i0', 'i1', 'i2', 'i3');
+    }
+
+    /**
      * Function googleGadgetsProxy
      *
      * @param string $url
-     * @param string|int $width
-     * @param string|int|null $height
+     * @param int|null $width
+     * @param int|null $height
+     * @param string|null $server
      *
      * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/20/2021 11:20
      */
-    public static function googleGadgetsProxy(string $url = '', $width = 100, $height = null): string
+    public static function googleGadgetsProxy($url = '', $width = 100, $height = null, $server = 'images1'): string
     {
-        if (strpos($url, 'media.anhp.vn')) {
-            return trim($url);
+        $server = trim($server);
+        if (in_array($server, self::googleGadgetsProxyServerList())) {
+            $proxyUrl = 'https://' . trim($server) . '-focus-opensocial.googleusercontent.com/gadgets/proxy';
+        } else {
+            $proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy';
         }
-        $proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy';
         $proxyContainer = 'focus';
         $proxyRefresh = 2592000;
         // Start
         $params = array();
         $params['url'] = $url;
-        $params['resize_w'] = $width;
+        if ($width !== null) {
+            $params['resize_w'] = $width;
+        }
         if ($height !== null) {
             $params['resize_h'] = $height;
         }
@@ -67,21 +96,28 @@ class ImageHelper
         $params['refresh'] = $proxyRefresh;
         // Result URL
         $url = $proxyUrl . '?' . urldecode(http_build_query($params));
-
         return trim($url);
     }
 
     /**
      * Function googleGadgetsProxyDnsPrefetch
      *
+     * @param $server
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
      * @return string
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/15/2021 34:32
      */
-    public static function googleGadgetsProxyDnsPrefetch(): string
+    public static function googleGadgetsProxyDnsPrefetch($server = 'images1'): string
     {
-        return "<link href='//images1-focus-opensocial.googleusercontent.com' rel='dns-prefetch' />" . PHP_EOL;
+        $html = '';
+        if ($server === 'full') {
+            foreach (self::googleGadgetsProxyServerList() as $proxy) {
+                $html .= "<link href='//" . trim($proxy) . "-focus-opensocial.googleusercontent.com' rel='dns-prefetch' />" . PHP_EOL;
+            }
+        } else {
+            $html .= "<link href='//images1-focus-opensocial.googleusercontent.com' rel='dns-prefetch' />" . PHP_EOL;
+        }
+        return $html;
     }
 
     /**
@@ -95,14 +131,27 @@ class ImageHelper
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/20/2021 11:39
      */
-    public static function wordpressProxy(string $imageUrl = '', string $server = 'i3'): string
+    public static function wordpressProxy($imageUrl = '', $server = 'i3'): string
     {
-        if (strpos($imageUrl, 'media.anhp.vn')) {
+        $url = parse_url($imageUrl);
+        $schema = isset($url['scheme']) ? $url['scheme'] : '';
+        $host = isset($url['host']) ? $url['host'] : '';
+        if (empty($host)) {
             return trim($imageUrl);
         }
-        $imageUrl = str_replace(array('https://', 'http://', '//'), '', $imageUrl);
-        $url = 'https://' . trim($server) . '.wp.com/' . $imageUrl;
-
+        if ($schema === 'http') {
+            // Default, WordPress Proxy not Support HTTP Protocol -> Auto Switch Google GadgetsProxy
+            return self::googleGadgetsProxy($imageUrl, null);
+        }
+        $protocol = array($schema . '://', '//',);
+        $imageUrl = str_replace($protocol, '', $imageUrl);
+        $server = trim($server);
+        if (in_array($server, self::wordpressProxyProxyServerList())) {
+            $proxyUrl = 'https://' . trim($server) . '.wp.com/';
+        } else {
+            $proxyUrl = 'https://i3.wp.com/';
+        }
+        $url = $proxyUrl . $imageUrl;
         return trim($url);
     }
 
@@ -116,11 +165,10 @@ class ImageHelper
      */
     public static function wordpressProxyDnsPrefetch(): string
     {
-        $html = "<link href='//i0.wp.com' rel='dns-prefetch' />" . PHP_EOL;
-        $html .= "<link href='//i1.wp.com' rel='dns-prefetch' />" . PHP_EOL;
-        $html .= "<link href='//i2.wp.com' rel='dns-prefetch' />" . PHP_EOL;
-        $html .= "<link href='//i3.wp.com' rel='dns-prefetch' />" . PHP_EOL;
-
+        $html = '';
+        foreach (self::wordpressProxyProxyServerList() as $server) {
+            $html .= "<link href='//" . trim($server) . ".wp.com' rel='dns-prefetch' />" . PHP_EOL;
+        }
         return $html;
     }
 

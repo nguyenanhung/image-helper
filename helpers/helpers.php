@@ -3,18 +3,19 @@ if (!function_exists('google_image_resize')) {
     /**
      * Function google_image_resize
      *
-     * @param string          $url
-     * @param string|int      $width
-     * @param string|int|null $height
+     * @param string $url
+     * @param int|null $width
+     * @param int|null $height
+     * @param string|null $server
      *
      * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 07/27/2021 37:48
      */
-    function google_image_resize(string $url = '', $width = 100, $height = null): string
+    function google_image_resize(string $url = '', $width = 100, $height = null, string $server = 'images1'): string
     {
-        return nguyenanhung\Libraries\ImageHelper\ImageHelper::googleGadgetsProxy($url, $width, $height);
+        return nguyenanhung\Libraries\ImageHelper\ImageHelper::googleGadgetsProxy($url, $width, $height, $server);
     }
 }
 if (!function_exists('google_image_proxy_dns_prefetch')) {
@@ -112,8 +113,8 @@ if (!function_exists('bear_framework_create_image_thumbnail')) {
      * Function bear_framework_create_image_thumbnail
      *
      * @param string $url
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -130,8 +131,8 @@ if (!function_exists('create_image_thumbnail')) {
      * Function create_image_thumbnail
      *
      * @param string $url
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
