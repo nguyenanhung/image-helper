@@ -198,10 +198,8 @@ class ImageHelper
                 if (!empty($thumbnail)) {
                     return $thumbnail;
                 }
-
                 return $cache->thumbnail(config_item('image_path_tmp_default'), $width, $height);
             }
-
             return $url;
         } catch (Exception $e) {
             if (function_exists('log_message')) {
