@@ -13,7 +13,7 @@ if (!function_exists('google_image_resize')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 07/27/2021 37:48
      */
-    function google_image_resize(string $url = '', $width = 100, $height = null, string $server = 'images1'): string
+    function google_image_resize($url = '', $width = 100, $height = null, $server = 'images1'): string
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::googleGadgetsProxy($url, $width, $height, $server);
     }
@@ -44,7 +44,7 @@ if (!function_exists('wordpress_proxy')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 07/27/2021 38:04
      */
-    function wordpress_proxy(string $imageUrl = '', string $server = 'i3'): string
+    function wordpress_proxy($imageUrl = '', $server = 'i3'): string
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::wordpressProxy($imageUrl, $server);
     }
@@ -76,7 +76,7 @@ if (!function_exists('bear_framework_image_url')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 15/06/2022 54:18
      */
-    function bear_framework_image_url(string $input = '', $server = '', $base = 'live'): string
+    function bear_framework_image_url($input = '', $server = '', $base = 'live'): string
     {
         $images_url = trim($input);
         if (function_exists('config_item') && !empty($images_url)) {
@@ -121,7 +121,7 @@ if (!function_exists('bear_framework_create_image_thumbnail')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 15/06/2022 03:06
      */
-    function bear_framework_create_image_thumbnail(string $url = '', int $width = 100, int $height = 100)
+    function bear_framework_create_image_thumbnail($url = '', $width = 100, $height = 100)
     {
         return create_image_thumbnail($url, $width, $height);
     }
@@ -139,7 +139,7 @@ if (!function_exists('create_image_thumbnail')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 15/06/2022 03:06
      */
-    function create_image_thumbnail(string $url = '', int $width = 100, int $height = 100)
+    function create_image_thumbnail($url = '', $width = 100, $height = 100)
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::createThumbnail($url, $width, $height);
     }

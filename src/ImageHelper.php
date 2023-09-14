@@ -184,7 +184,7 @@ class ImageHelper
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 15/06/2022 00:20
      */
-    public static function createThumbnail(string $url = '', int $width = 100, int $height = 100)
+    public static function createThumbnail($url = '', $width = 100, $height = 100)
     {
         try {
             if (function_exists('base_url') && function_exists('config_item') && class_exists('nguyenanhung\MyImage\ImageCache')) {
