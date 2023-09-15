@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '1.0.7';
+    const VERSION = '1.0.8';
 
     /**
      * Function getVersion
@@ -140,6 +140,9 @@ class ImageHelper
         $schema = isset($url['scheme']) ? $url['scheme'] : '';
         $host = isset($url['host']) ? $url['host'] : '';
         if (empty($host)) {
+            return trim($imageUrl);
+        }
+        if ($host === 'media.anhp.vn') {
             return trim($imageUrl);
         }
         if ($schema === 'http') {
