@@ -251,4 +251,42 @@ class ImageHelper
             return $url;
         }
     }
+
+    public static function formatImageUrl($input = '', $server = '', $base = 'live')
+    {
+        $images_url = trim($input);
+        $images_url = str_replace('http://cdnphoto.dantri.com.vn/', 'https://cdnphoto.dantri.com.vn/', $images_url);
+        try {
+            if (function_exists('base_url') && function_exists('config_item') && !empty($images_url)) {
+                $no_thumb = array(
+                    'images/system/no_avatar.jpg',
+                    'images/system/no_avatar_100x100.jpg',
+                    'images/system/no_video_available.jpg',
+                    'images/system/no_video_available_thumb.jpg',
+                    'images/system/no-image-available.jpg',
+                    'images/system/no-image-available_60.jpg',
+                    'images/system/no-image-available_330.jpg'
+                );
+                if (in_array($images_url, $no_thumb)) {
+                    return assets_url($images_url);
+                }
+                $parse = parse_url($images_url);
+                if (isset($parse['host'])) {
+                    return $images_url;
+                }
+                if (trim(mb_substr($images_url, 0, 12)) === 'crawler-news') {
+                    $images_url = trim('uploads/' . $images_url);
+                }
+                $images_url = str_replace(array('upload-vcms/news/news/', 'upload-vcms/mheath/mheath/'), array('upload-vcms/news/', 'upload-vcms/mheath/'), $images_url);
+                return config_item('static_url') . $images_url;
+            }
+
+            return $images_url;
+        } catch (Exception $e) {
+            if (function_exists('log_message')) {
+                log_message('error', "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine() . " - Message: " . $e->getMessage());
+            }
+            return $input;
+        }
+    }
 }
