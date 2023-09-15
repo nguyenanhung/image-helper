@@ -63,6 +63,22 @@ class ImageHelper
     }
 
     /**
+     * Function imageProxyBlacklistServer
+     *
+     * @return string[]|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 15/09/2023 18:23
+     */
+    public static function imageProxyBlacklistServer()
+    {
+        if (defined('PROXY_IMAGE_BLACKLIST_SERVER')) {
+            return PROXY_IMAGE_BLACKLIST_SERVER;
+        }
+        return null;
+    }
+
+    /**
      * Function googleGadgetsProxy
      *
      * @param string      $url
@@ -77,6 +93,23 @@ class ImageHelper
      */
     public static function googleGadgetsProxy($url = '', $width = 100, $height = null, $server = 'images1'): string
     {
+        $parse = parse_url($url);
+        $host = $parse['host'] ?? '';
+        if (empty($host)) {
+            return trim($url);
+        }
+        // Blacklist Proxy
+        $blacklistServer = self::imageProxyBlacklistServer();
+        if (!empty($blacklistServer)) {
+            if (is_array($blacklistServer)) {
+                if (in_array($host, $blacklistServer, true)) {
+                    return trim($url);
+                }
+            } elseif ($host === $blacklistServer) {
+                return trim($url);
+            }
+        }
+        // Next
         $server = trim($server);
         if (in_array($server, self::googleGadgetsProxyServerList())) {
             $proxyUrl = 'https://' . trim($server) . '-focus-opensocial.googleusercontent.com/gadgets/proxy';
@@ -137,14 +170,23 @@ class ImageHelper
     public static function wordpressProxy($imageUrl = '', $server = 'i3'): string
     {
         $url = parse_url($imageUrl);
-        $schema = isset($url['scheme']) ? $url['scheme'] : '';
-        $host = isset($url['host']) ? $url['host'] : '';
+        $schema = $url['scheme'] ?? '';
+        $host = $url['host'] ?? '';
         if (empty($host)) {
             return trim($imageUrl);
         }
-        if ($host === 'media.anhp.vn') {
-            return trim($imageUrl);
+        // Blacklist Proxy
+        $blacklistServer = self::imageProxyBlacklistServer();
+        if (!empty($blacklistServer)) {
+            if (is_array($blacklistServer)) {
+                if (in_array($host, $blacklistServer, true)) {
+                    return trim($imageUrl);
+                }
+            } elseif ($host === $blacklistServer) {
+                return trim($imageUrl);
+            }
         }
+        // Next
         if ($schema === 'http') {
             // Default, WordPress Proxy not Support HTTP Protocol -> Auto Switch Google GadgetsProxy
             return self::googleGadgetsProxy($imageUrl, null);
