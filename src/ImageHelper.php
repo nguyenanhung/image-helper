@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.7';
+    const VERSION = '2.0.8';
 
     /**
      * Function getVersion
@@ -78,12 +78,20 @@ class ImageHelper
         return null;
     }
 
+    public static function imageProxyWhitelistServer()
+    {
+        if (defined('PROXY_IMAGE_WHITELIST_SERVER')) {
+            return PROXY_IMAGE_WHITELIST_SERVER;
+        }
+        return null;
+    }
+
     /**
      * Function googleGadgetsProxy
      *
-     * @param string      $url
-     * @param int|null    $width
-     * @param int|null    $height
+     * @param string $url
+     * @param int|null $width
+     * @param int|null $height
      * @param string|null $server
      *
      * @return string
@@ -224,8 +232,8 @@ class ImageHelper
      * Function createThumbnail
      *
      * @param string $url
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
