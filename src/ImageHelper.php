@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.5';
+    const VERSION = '2.0.6';
 
     /**
      * Function getVersion
@@ -41,6 +41,7 @@ class ImageHelper
      *
      * User: 713uk13m <dev@nguyenanhung.com>
      * Copyright: 713uk13m <dev@nguyenanhung.com>
+     *
      * @return string[]|array
      */
     public static function googleGadgetsProxyServerList(): array
@@ -53,6 +54,7 @@ class ImageHelper
      *
      * User: 713uk13m <dev@nguyenanhung.com>
      * Copyright: 713uk13m <dev@nguyenanhung.com>
+     *
      * @return string[]|array
      */
     public static function wordpressProxyProxyServerList(): array
@@ -63,9 +65,9 @@ class ImageHelper
     /**
      * Function googleGadgetsProxy
      *
-     * @param string $url
-     * @param int|null $width
-     * @param int|null $height
+     * @param string      $url
+     * @param int|null    $width
+     * @param int|null    $height
      * @param string|null $server
      *
      * @return string
@@ -105,6 +107,7 @@ class ImageHelper
      * @param $server
      * User: 713uk13m <dev@nguyenanhung.com>
      * Copyright: 713uk13m <dev@nguyenanhung.com>
+     *
      * @return string
      */
     public static function googleGadgetsProxyDnsPrefetch($server = 'images1'): string
@@ -137,6 +140,9 @@ class ImageHelper
         $schema = isset($url['scheme']) ? $url['scheme'] : '';
         $host = isset($url['host']) ? $url['host'] : '';
         if (empty($host)) {
+            return trim($imageUrl);
+        }
+        if ($host === 'media.anhp.vn') {
             return trim($imageUrl);
         }
         if ($schema === 'http') {
@@ -176,8 +182,8 @@ class ImageHelper
      * Function createThumbnail
      *
      * @param string $url
-     * @param int $width
-     * @param int $height
+     * @param int    $width
+     * @param int    $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -211,6 +217,7 @@ class ImageHelper
             return $url;
         }
     }
+
     /**
      * Function createThumbnailWithCodeIgniterCache
      *
@@ -221,7 +228,7 @@ class ImageHelper
      * @return mixed|string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 25/02/2023 27:41
+     * @time     : 15/09/2023 01:35
      */
     public static function createThumbnailWithCodeIgniterCache($url = '', $width = 100, $height = 100)
     {
@@ -259,6 +266,56 @@ class ImageHelper
                 log_message('error', "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine() . " - Message: " . $e->getMessage());
             }
             return $url;
+        }
+    }
+
+    /**
+     * Function formatImageUrl
+     *
+     * @param $input
+     * @param $server
+     * @param $base
+     *
+     * @return array|mixed|string|string[]
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 15/09/2023 01:39
+     */
+    public static function formatImageUrl($input = '', $server = '', $base = 'live')
+    {
+        $images_url = trim($input);
+        $images_url = str_replace('http://cdnphoto.dantri.com.vn/', 'https://cdnphoto.dantri.com.vn/', $images_url);
+        try {
+            if (function_exists('base_url') && function_exists('config_item') && !empty($images_url)) {
+                $no_thumb = array(
+                    'images/system/no_avatar.jpg',
+                    'images/system/no_avatar_100x100.jpg',
+                    'images/system/no_video_available.jpg',
+                    'images/system/no_video_available_thumb.jpg',
+                    'images/system/no-image-available.jpg',
+                    'images/system/no-image-available_60.jpg',
+                    'images/system/no-image-available_330.jpg'
+                );
+                if (in_array($images_url, $no_thumb)) {
+                    return assets_url($images_url);
+                }
+                $parse = parse_url($images_url);
+                if (isset($parse['host'])) {
+                    return $images_url;
+                }
+                if (trim(mb_substr($images_url, 0, 12)) === 'crawler-news') {
+                    $images_url = trim('uploads/' . $images_url);
+                }
+                $images_url = str_replace(array('upload-vcms/news/news/', 'upload-vcms/mheath/mheath/'), array('upload-vcms/news/', 'upload-vcms/mheath/'), $images_url);
+                return config_item('static_url') . $images_url;
+            }
+
+            return $images_url;
+        } catch (Exception $e) {
+            if (function_exists('log_message')) {
+                log_message('error', "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine() . " - Message: " . $e->getMessage());
+            }
+            return $input;
         }
     }
 }
