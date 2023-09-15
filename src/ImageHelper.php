@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.4';
+    const VERSION = '2.0.5';
 
     /**
      * Function getVersion
@@ -208,6 +208,56 @@ class ImageHelper
                 log_message('error', "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine() . " - Message: " . $e->getMessage());
             }
 
+            return $url;
+        }
+    }
+    /**
+     * Function createThumbnailWithCodeIgniterCache
+     *
+     * @param $url
+     * @param $width
+     * @param $height
+     *
+     * @return mixed|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 25/02/2023 27:41
+     */
+    public static function createThumbnailWithCodeIgniterCache($url = '', $width = 100, $height = 100)
+    {
+        try {
+            if (function_exists('base_url') && function_exists('config_item')) {
+                $cacheKey = md5('createThumbnailWithCodeIgniterCache' . $url . $width . $height);
+                $cacheTtl = 15552000; // Cache 6 tháng
+                // Setup CodeIgniter
+                $CI =& get_instance();
+                $CI->load->driver('cache', array('adapter' => 'file', 'backup' => 'dummy'));
+                if (!$urlThumbnail = $CI->cache->get($cacheKey)) {
+                    $tmpPath = config_item('image_tmp_path');
+                    $storagePath = config_item('base_storage_path');
+                    $imageCache = new \nguyenanhung\MyImage\ImageCache();
+                    $imageCache->setTmpPath($tmpPath)->setUrlPath(base_url($storagePath))->setDefaultImage();
+                    $thumbnail = $imageCache->thumbnail($url, $width, $height);
+                    if (!empty($thumbnail)) {
+                        $urlThumbnail = $thumbnail;
+                    } else {
+                        $thumbnailTmp = $imageCache->thumbnail(config_item('image_path_tmp_default'), $width, $height);
+                        $urlThumbnail = $thumbnailTmp;
+                    }
+                    if ($urlThumbnail !== null) {
+                        $CI->cache->save($cacheKey, $urlThumbnail, $cacheTtl);
+                    }
+                }
+                if (!empty($urlThumbnail)) {
+                    return $urlThumbnail;
+                }
+                return $url;
+            }
+            return $url;
+        } catch (Exception $e) {
+            if (function_exists('log_message')) {
+                log_message('error', "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine() . " - Message: " . $e->getMessage());
+            }
             return $url;
         }
     }
