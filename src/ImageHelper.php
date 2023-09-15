@@ -213,6 +213,18 @@ class ImageHelper
         }
     }
 
+    /**
+     * Function createThumbnailWithCodeIgniterCache
+     *
+     * @param $url
+     * @param $width
+     * @param $height
+     *
+     * @return mixed|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 15/09/2023 01:35
+     */
     public static function createThumbnailWithCodeIgniterCache($url = '', $width = 100, $height = 100)
     {
         try {
@@ -252,6 +264,18 @@ class ImageHelper
         }
     }
 
+    /**
+     * Function formatImageUrl
+     *
+     * @param $input
+     * @param $server
+     * @param $base
+     *
+     * @return array|mixed|string|string[]
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 15/09/2023 01:39
+     */
     public static function formatImageUrl($input = '', $server = '', $base = 'live')
     {
         $images_url = trim($input);
