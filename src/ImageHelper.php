@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.8';
+    const VERSION = '2.0.9';
 
     /**
      * Function getVersion
@@ -334,7 +334,8 @@ class ImageHelper
     public static function formatImageUrl($input = '', $server = '', $base = 'live')
     {
         $images_url = trim($input);
-        $images_url = str_replace('http://cdnphoto.dantri.com.vn/', 'https://cdnphoto.dantri.com.vn/', $images_url);
+        $images_url = bear_framework_crawler_reformat_url_link_need_change_http_to_https($images_url);
+        $images_url = bear_framework_crawler_reformat_url_link_need_change_domain($images_url);
         try {
             if (function_exists('base_url') && function_exists('config_item') && !empty($images_url)) {
                 $no_thumb = array(
