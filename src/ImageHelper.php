@@ -325,7 +325,8 @@ class ImageHelper
     public static function formatImageUrl($input = '', $server = '', $base = 'live')
     {
         $images_url = trim($input);
-        $images_url = str_replace('http://cdnphoto.dantri.com.vn/', 'https://cdnphoto.dantri.com.vn/', $images_url);
+        $images_url = bear_framework_crawler_reformat_url_link_need_change_http_to_https($input);
+        $images_url = bear_framework_crawler_reformat_url_link_need_change_domain($input);
         try {
             if (function_exists('base_url') && function_exists('config_item') && !empty($images_url)) {
                 $no_thumb = array(
