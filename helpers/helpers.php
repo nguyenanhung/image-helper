@@ -121,6 +121,7 @@ if (!function_exists('bear_framework_crawler_reformat_url_link_need_change_http_
     function bear_framework_crawler_reformat_url_link_need_change_http_to_https($url): string
     {
         $url = str_replace('http://cdnphoto.dantri.com.vn', 'https://cdnphoto.dantri.com.vn', $url);
+        $url = str_replace('http://img.fica.vn', 'https://img.fica.vn', $url);
         $url = str_replace('http://cdn-i.vtcnews.vn', 'https://cdn-i.vtcnews.vn', $url);
         $url = str_replace('http://www.vothuat.vn', 'https://www.vothuat.vn', $url);
         $url = str_replace('http://haiphong.gov.vn', 'https://haiphong.gov.vn', $url);
