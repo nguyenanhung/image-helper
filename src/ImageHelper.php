@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.10';
+    const VERSION = '2.0.11';
 
     /**
      * Function getVersion
@@ -169,17 +169,20 @@ class ImageHelper
      *
      * @param string $imageUrl
      * @param string $server
+     * @param int|string|null $width
+     * @param int|string|null $height
      *
      * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/20/2021 11:39
      */
-    public static function wordpressProxy($imageUrl = '', $server = 'i3'): string
+    public static function wordpressProxy($imageUrl = '', $server = 'i3', $width = null, $height = null): string
     {
         $url = parse_url($imageUrl);
         $schema = $url['scheme'] ?? '';
         $host = $url['host'] ?? '';
+        $port = $url['port'] ?? '';
         if (empty($host)) {
             return trim($imageUrl);
         }
@@ -195,10 +198,14 @@ class ImageHelper
             }
         }
         // Next
-        if ($schema === 'http') {
-            // Default, WordPress Proxy not Support HTTP Protocol -> Auto Switch Google GadgetsProxy
-            return self::googleGadgetsProxy($imageUrl, null);
+        if ($schema === 'http' && (!empty($port) && $port != 80)) {
+            /**
+             * Default, WordPress Proxy not Support HTTP Protocol with port != 80 -> Auto Switch Google GadgetsProxy
+             * @see https://jetpack.com/support/site-accelerator/
+             */
+            return self::googleGadgetsProxy($imageUrl, $width, $height);
         }
+
         $protocol = array($schema . '://', '//',);
         $imageUrl = str_replace($protocol, '', $imageUrl);
         $server = trim($server);
@@ -208,6 +215,23 @@ class ImageHelper
             $proxyUrl = 'https://i3.wp.com/';
         }
         $url = $proxyUrl . $imageUrl;
+        $url = trim($url);
+        // Resize
+        $width = (int)$width;
+        $height = (int)$height;
+        if ($width > 0 && $height > 0) {
+            $resize = '?resize=' . $width . ',' . $height;
+            return $url . $resize;
+        }
+        if ($width > 0) {
+            $resize = '?w=' . $width;
+            return $url . $resize;
+        }
+        if ($height > 0) {
+            $resize = '?h=' . $height;
+            return $url . $resize;
+        }
+        // return
         return trim($url);
     }
 
