@@ -21,7 +21,8 @@
     ],
     "require": {
         "php": ">=5.6",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "smart-bear-cms/external-cdn-url-optimize": ">=1.0"
     },
     "require-dev": {
         "nguyenanhung/image": ">=1.0"
