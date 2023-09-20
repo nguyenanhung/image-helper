@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.12.1';
+    const VERSION = '2.0.12.2';
 
     /**
      * Function getVersion
@@ -142,7 +142,7 @@ class ImageHelper
             return trim($url);
         }
         if (in_array($host, self::googleGadgetsProxyServerHostnameList(), true)) {
-            return trim($host);
+            return trim($url);
         }
         // Blacklist Proxy
         $blacklistServer = self::imageProxyBlacklistServer();
@@ -225,7 +225,7 @@ class ImageHelper
             return trim($imageUrl);
         }
         if (in_array($host, self::wordpressProxyProxyServerHostnameList(), true)) {
-            return trim($host);
+            return trim($imageUrl);
         }
         // Blacklist Proxy
         $blacklistServer = self::imageProxyBlacklistServer();
