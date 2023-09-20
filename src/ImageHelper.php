@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '1.0.14';
+    const VERSION = '1.0.14.1';
 
     /**
      * Function getVersion
@@ -49,6 +49,11 @@ class ImageHelper
         return array('images1', 'images2', 'images3', 'images4', 'images5', 'images6', 'images7', 'images8', 'images9', 'images10');
     }
 
+    public static function googleGadgetsProxyServerHostnameList()
+    {
+        return array('images1-focus-opensocial.googleusercontent.com', 'images2-focus-opensocial.googleusercontent.com', 'images3-focus-opensocial.googleusercontent.com', 'images4-focus-opensocial.googleusercontent.com', 'images5-focus-opensocial.googleusercontent.com', 'images6-focus-opensocial.googleusercontent.com', 'images7-focus-opensocial.googleusercontent.com', 'images8-focus-opensocial.googleusercontent.com', 'images9-focus-opensocial.googleusercontent.com', 'images10-focus-opensocial.googleusercontent.com');
+    }
+
     /**
      * Function wordpressProxyProxyServerList
      *
@@ -60,6 +65,18 @@ class ImageHelper
     public static function wordpressProxyProxyServerList()
     {
         return array('i0', 'i1', 'i2', 'i3');
+    }
+
+    /**
+     * Function wordpressProxyProxyServerHostnameList
+     *
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return string[]
+     */
+    public static function wordpressProxyProxyServerHostnameList()
+    {
+        return array('i0.wp.com', 'i1.wp.com', 'i2.wp.com', 'i3.wp.com');
     }
 
     /**
@@ -104,6 +121,10 @@ class ImageHelper
         $parse = parse_url($url);
         $host = isset($parse['host']) ? $parse['host'] : '';
         if (empty($host)) {
+            return trim($url);
+        }
+
+        if (in_array($host, self::googleGadgetsProxyServerHostnameList())) {
             return trim($url);
         }
 
@@ -188,6 +209,10 @@ class ImageHelper
 
         if (empty($host)) {
             return trim($imageUrl);
+        }
+
+        if (in_array($host, self::wordpressProxyProxyServerList())) {
+            return trim($url);
         }
 
         if ($schema === 'http' && (!empty($port) && $port != 80)) {
