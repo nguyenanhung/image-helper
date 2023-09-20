@@ -3,9 +3,9 @@ if (!function_exists('google_image_resize')) {
     /**
      * Function google_image_resize
      *
-     * @param string      $url
-     * @param int|null    $width
-     * @param int|null    $height
+     * @param string $url
+     * @param int|null $width
+     * @param int|null $height
      * @param string|null $server
      *
      * @return string
@@ -38,15 +38,17 @@ if (!function_exists('wordpress_proxy')) {
      *
      * @param string $imageUrl
      * @param string $server
+     * @param int|string|null $width
+     * @param int|string|null $height
      *
      * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 07/27/2021 38:04
      */
-    function wordpress_proxy($imageUrl = '', $server = 'i3'): string
+    function wordpress_proxy($imageUrl = '', $server = 'i3', $width = null, $height = null): string
     {
-        return nguyenanhung\Libraries\ImageHelper\ImageHelper::wordpressProxy($imageUrl, $server);
+        return nguyenanhung\Libraries\ImageHelper\ImageHelper::wordpressProxy($imageUrl, $server, $width, $height);
     }
 }
 if (!function_exists('wordpress_proxy_dns_prefetch')) {
@@ -86,8 +88,8 @@ if (!function_exists('bear_framework_create_image_thumbnail')) {
      * Function bear_framework_create_image_thumbnail
      *
      * @param string $url
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -104,8 +106,8 @@ if (!function_exists('create_image_thumbnail')) {
      * Function create_image_thumbnail
      *
      * @param string $url
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
