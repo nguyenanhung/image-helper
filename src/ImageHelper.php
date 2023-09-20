@@ -255,25 +255,22 @@ class ImageHelper
         } else {
             $proxyUrl = 'https://i3.wp.com/';
         }
-        $url = $proxyUrl . $imageUrl;
-        $url = trim($url);
+        $proxyImageUrl = $proxyUrl . trim($imageUrl);
+        $proxyImageUrl = trim($proxyImageUrl);
         // Resize
         $width = (int)$width;
         $height = (int)$height;
         if ($width > 0 && $height > 0) {
-            $resize = '?resize=' . $width . ',' . $height;
-            return $url . $resize;
+            return $proxyImageUrl . '?' . http_build_query(array('resize' => $width . ',' . $height));
         }
         if ($width > 0) {
-            $resize = '?w=' . $width;
-            return $url . $resize;
+            return $proxyImageUrl . '?w=' . $width;
         }
         if ($height > 0) {
-            $resize = '?h=' . $height;
-            return $url . $resize;
+            return $proxyImageUrl . '?h=' . $height;
         }
         // return
-        return trim($url);
+        return trim($proxyImageUrl);
     }
 
     /**
