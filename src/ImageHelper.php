@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.12';
+    const VERSION = '2.0.12.1';
 
     /**
      * Function getVersion
@@ -50,6 +50,29 @@ class ImageHelper
     }
 
     /**
+     * Function googleGadgetsProxyServerHostnameList
+     *
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return string[]
+     */
+    public static function googleGadgetsProxyServerHostnameList(): array
+    {
+        return array(
+            'images1-focus-opensocial.googleusercontent.com',
+            'images2-focus-opensocial.googleusercontent.com',
+            'images3-focus-opensocial.googleusercontent.com',
+            'images4-focus-opensocial.googleusercontent.com',
+            'images5-focus-opensocial.googleusercontent.com',
+            'images6-focus-opensocial.googleusercontent.com',
+            'images7-focus-opensocial.googleusercontent.com',
+            'images8-focus-opensocial.googleusercontent.com',
+            'images9-focus-opensocial.googleusercontent.com',
+            'images10-focus-opensocial.googleusercontent.com'
+        );
+    }
+
+    /**
      * Function wordpressProxyProxyServerList
      *
      * User: 713uk13m <dev@nguyenanhung.com>
@@ -60,6 +83,18 @@ class ImageHelper
     public static function wordpressProxyProxyServerList(): array
     {
         return array('i0', 'i1', 'i2', 'i3');
+    }
+
+    /**
+     * Function wordpressProxyProxyServerHostnameList
+     *
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return string[]
+     */
+    public static function wordpressProxyProxyServerHostnameList(): array
+    {
+        return array('i0.wp.com', 'i1.wp.com', 'i2.wp.com', 'i3.wp.com');
     }
 
     /**
@@ -105,6 +140,9 @@ class ImageHelper
         $host = $parse['host'] ?? '';
         if (empty($host)) {
             return trim($url);
+        }
+        if (in_array($host, self::googleGadgetsProxyServerHostnameList(), true)) {
+            return trim($host);
         }
         // Blacklist Proxy
         $blacklistServer = self::imageProxyBlacklistServer();
@@ -185,6 +223,9 @@ class ImageHelper
         $port = $url['port'] ?? '';
         if (empty($host)) {
             return trim($imageUrl);
+        }
+        if (in_array($host, self::wordpressProxyProxyServerHostnameList(), true)) {
+            return trim($host);
         }
         // Blacklist Proxy
         $blacklistServer = self::imageProxyBlacklistServer();
