@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.12.2';
+    const VERSION = '2.0.12.3';
 
     /**
      * Function getVersion
@@ -221,6 +221,8 @@ class ImageHelper
         $schema = $url['scheme'] ?? '';
         $host = $url['host'] ?? '';
         $port = $url['port'] ?? '';
+        $urlQuery = $url['query'] ?? '';
+        $urlPath = $url['path'] ?? '';
         if (empty($host)) {
             return trim($imageUrl);
         }
@@ -249,6 +251,11 @@ class ImageHelper
 
         $protocol = array($schema . '://', '//',);
         $imageUrl = str_replace($protocol, '', $imageUrl);
+        $imageUrl = str_replace($urlPath . '?', $urlPath, $imageUrl);
+        if (!empty($urlQuery)) {
+            $imageUrl = str_replace('?' . $urlQuery, '', $imageUrl);
+        }
+
         $server = trim($server);
         if (in_array($server, self::wordpressProxyProxyServerList())) {
             $proxyUrl = 'https://' . trim($server) . '.wp.com/';
@@ -257,17 +264,41 @@ class ImageHelper
         }
         $proxyImageUrl = $proxyUrl . trim($imageUrl);
         $proxyImageUrl = trim($proxyImageUrl);
+
         // Resize
         $width = (int)$width;
         $height = (int)$height;
+        if (!empty($urlQuery)) {
+            parse_str($urlQuery, $queryParams);
+        } else {
+            $queryParams = null;
+        }
         if ($width > 0 && $height > 0) {
-            return $proxyImageUrl . '?' . http_build_query(array('resize' => $width . ',' . $height));
+            $resizeParams = array(
+                'resize' => $width . ',' . $height
+            );
+            if (!empty($queryParams)) {
+                $resizeParams = array_merge($resizeParams, $queryParams);
+            }
+            return $proxyImageUrl . '?' . http_build_query($resizeParams);
         }
         if ($width > 0) {
-            return $proxyImageUrl . '?w=' . $width;
+            $resizeParams = array(
+                'w' => $width
+            );
+            if (!empty($queryParams)) {
+                $resizeParams = array_merge($resizeParams, $queryParams);
+            }
+            return $proxyImageUrl . '?' . http_build_query($resizeParams);
         }
         if ($height > 0) {
-            return $proxyImageUrl . '?h=' . $height;
+            $resizeParams = array(
+                'h' => $height
+            );
+            if (!empty($queryParams)) {
+                $resizeParams = array_merge($resizeParams, $queryParams);
+            }
+            return $proxyImageUrl . '?' . http_build_query($resizeParams);
         }
         // return
         return trim($proxyImageUrl);
