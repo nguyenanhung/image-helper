@@ -251,11 +251,10 @@ class ImageHelper
 
         $protocol = array($schema . '://', '//',);
         $imageUrl = str_replace($protocol, '', $imageUrl);
-        $imageUrl = str_replace($urlPath . '?', $urlPath, $imageUrl);
         if (!empty($urlQuery)) {
             $imageUrl = str_replace('?' . $urlQuery, '', $imageUrl);
         }
-
+        $imageUrl = str_replace($urlPath . '?', $urlPath, $imageUrl);
         $server = trim($server);
         if (in_array($server, self::wordpressProxyProxyServerList())) {
             $proxyUrl = 'https://' . trim($server) . '.wp.com/';
