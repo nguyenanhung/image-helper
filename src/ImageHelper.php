@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.12.3';
+    const VERSION = '2.0.12.4';
 
     /**
      * Function getVersion
