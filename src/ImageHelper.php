@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.12.4';
+    const VERSION = '2.0.12.5';
 
     /**
      * Function getVersion
@@ -54,6 +54,7 @@ class ImageHelper
      *
      * User: 713uk13m <dev@nguyenanhung.com>
      * Copyright: 713uk13m <dev@nguyenanhung.com>
+     *
      * @return string[]
      */
     public static function googleGadgetsProxyServerHostnameList(): array
@@ -90,6 +91,7 @@ class ImageHelper
      *
      * User: 713uk13m <dev@nguyenanhung.com>
      * Copyright: 713uk13m <dev@nguyenanhung.com>
+     *
      * @return string[]
      */
     public static function wordpressProxyProxyServerHostnameList(): array
@@ -107,10 +109,13 @@ class ImageHelper
      */
     public static function imageProxyBlacklistServer()
     {
+        $defaultBlacklist = [
+            'assets2.htv.com.vn'
+        ];
         if (defined('PROXY_IMAGE_BLACKLIST_SERVER')) {
-            return PROXY_IMAGE_BLACKLIST_SERVER;
+            return array_merge($defaultBlacklist, PROXY_IMAGE_BLACKLIST_SERVER);
         }
-        return null;
+        return $defaultBlacklist;
     }
 
     public static function imageProxyWhitelistServer()
@@ -124,9 +129,9 @@ class ImageHelper
     /**
      * Function googleGadgetsProxy
      *
-     * @param string $url
-     * @param int|null $width
-     * @param int|null $height
+     * @param string      $url
+     * @param int|null    $width
+     * @param int|null    $height
      * @param string|null $server
      *
      * @return string
@@ -205,8 +210,8 @@ class ImageHelper
     /**
      * Function wordpressProxy
      *
-     * @param string $imageUrl
-     * @param string $server
+     * @param string          $imageUrl
+     * @param string          $server
      * @param int|string|null $width
      * @param int|string|null $height
      *
@@ -244,6 +249,7 @@ class ImageHelper
         if ($schema === 'http' && (!empty($port) && $port != 80)) {
             /**
              * Default, WordPress Proxy not Support HTTP Protocol with port != 80 -> Auto Switch Google GadgetsProxy
+             *
              * @see https://jetpack.com/support/site-accelerator/
              */
             return self::googleGadgetsProxy($imageUrl, $width, $height);
@@ -265,8 +271,8 @@ class ImageHelper
         $proxyImageUrl = trim($proxyImageUrl);
 
         // Resize
-        $width = (int)$width;
-        $height = (int)$height;
+        $width = (int) $width;
+        $height = (int) $height;
         if (!empty($urlQuery)) {
             parse_str($urlQuery, $queryParams);
         } else {
@@ -324,8 +330,8 @@ class ImageHelper
      * Function createThumbnail
      *
      * @param string $url
-     * @param int $width
-     * @param int $height
+     * @param int    $width
+     * @param int    $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
