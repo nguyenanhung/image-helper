@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.12.5';
+    const VERSION = '2.0.12.6';
 
     /**
      * Function getVersion
@@ -99,6 +99,22 @@ class ImageHelper
         return array('i0.wp.com', 'i1.wp.com', 'i2.wp.com', 'i3.wp.com');
     }
 
+    public static function cdnToOriginalServerList(): array
+    {
+        return [
+            'cdnmedia.baotintuc.vn',
+        ];
+
+    }
+
+    public static function convertCdnToOriginalServerList(): array
+    {
+        return [
+            'cdnmedia.baotintuc.vn' => 'media.baotintuc.vn',
+        ];
+
+    }
+
     /**
      * Function imageProxyBlacklistServer
      *
@@ -110,7 +126,9 @@ class ImageHelper
     public static function imageProxyBlacklistServer()
     {
         $defaultBlacklist = [
-            'assets2.htv.com.vn'
+            'assets2.htv.com.vn',
+            'cdnmedia.baotintuc.vn',
+            'cdnthumb.baotintuc.vn',
         ];
         if (defined('PROXY_IMAGE_BLACKLIST_SERVER')) {
             return array_merge($defaultBlacklist, PROXY_IMAGE_BLACKLIST_SERVER);
@@ -129,9 +147,9 @@ class ImageHelper
     /**
      * Function googleGadgetsProxy
      *
-     * @param string      $url
-     * @param int|null    $width
-     * @param int|null    $height
+     * @param string $url
+     * @param int|null $width
+     * @param int|null $height
      * @param string|null $server
      *
      * @return string
@@ -210,8 +228,8 @@ class ImageHelper
     /**
      * Function wordpressProxy
      *
-     * @param string          $imageUrl
-     * @param string          $server
+     * @param string $imageUrl
+     * @param string $server
      * @param int|string|null $width
      * @param int|string|null $height
      *
@@ -233,6 +251,11 @@ class ImageHelper
         }
         if (in_array($host, self::wordpressProxyProxyServerHostnameList(), true)) {
             return trim($imageUrl);
+        }
+        if (in_array($host, self::cdnToOriginalServerList(), true)) {
+            foreach (self::convertCdnToOriginalServerList() as $cdn => $origin) {
+                $imageUrl = str_replace($cdn, $origin, $imageUrl);
+            }
         }
         // Blacklist Proxy
         $blacklistServer = self::imageProxyBlacklistServer();
@@ -271,8 +294,8 @@ class ImageHelper
         $proxyImageUrl = trim($proxyImageUrl);
 
         // Resize
-        $width = (int) $width;
-        $height = (int) $height;
+        $width = (int)$width;
+        $height = (int)$height;
         if (!empty($urlQuery)) {
             parse_str($urlQuery, $queryParams);
         } else {
@@ -330,8 +353,8 @@ class ImageHelper
      * Function createThumbnail
      *
      * @param string $url
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
