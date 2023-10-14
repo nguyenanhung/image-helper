@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '2.0.12.6';
+    const VERSION = '2.0.12.7';
 
     /**
      * Function getVersion
@@ -127,7 +127,6 @@ class ImageHelper
     {
         $defaultBlacklist = [
             'assets2.htv.com.vn',
-            'cdnmedia.baotintuc.vn',
             'cdnthumb.baotintuc.vn',
         ];
         if (defined('PROXY_IMAGE_BLACKLIST_SERVER')) {
