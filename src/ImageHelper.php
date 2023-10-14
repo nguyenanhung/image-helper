@@ -127,7 +127,6 @@ class ImageHelper
     {
         $defaultBlacklist = [
             'assets2.htv.com.vn',
-            'cdnmedia.baotintuc.vn',
             'cdnthumb.baotintuc.vn',
         ];
         if (defined('PROXY_IMAGE_BLACKLIST_SERVER')) {
