@@ -265,15 +265,11 @@ class ImageHelper
         // Check Image file extension
         $imagePathInfo = pathinfo($imageUrl);
         $imageExtension = $imagePathInfo['extension'];
-        $jetpackSupportedExtensions = [
-            'jpg',
-            'jpeg',
-            'png',
-            'gif',
-            'webp'
+        $jetpackBlockExtensions = [
+            'svg',
         ];
 
-        if (!in_array($imageExtension, $jetpackSupportedExtensions)) {
+        if (in_array($imageExtension, $jetpackBlockExtensions, true)) {
             return trim($imageUrl);
         }
 
