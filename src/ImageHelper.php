@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '1.0.14.1';
+    const VERSION = '1.0.15';
 
     /**
      * Function getVersion
@@ -46,12 +46,34 @@ class ImageHelper
      */
     public static function googleGadgetsProxyServerList()
     {
-        return array('images1', 'images2', 'images3', 'images4', 'images5', 'images6', 'images7', 'images8', 'images9', 'images10');
+        return array(
+            'images1',
+            'images2',
+            'images3',
+            'images4',
+            'images5',
+            'images6',
+            'images7',
+            'images8',
+            'images9',
+            'images10'
+        );
     }
 
     public static function googleGadgetsProxyServerHostnameList()
     {
-        return array('images1-focus-opensocial.googleusercontent.com', 'images2-focus-opensocial.googleusercontent.com', 'images3-focus-opensocial.googleusercontent.com', 'images4-focus-opensocial.googleusercontent.com', 'images5-focus-opensocial.googleusercontent.com', 'images6-focus-opensocial.googleusercontent.com', 'images7-focus-opensocial.googleusercontent.com', 'images8-focus-opensocial.googleusercontent.com', 'images9-focus-opensocial.googleusercontent.com', 'images10-focus-opensocial.googleusercontent.com');
+        return array(
+            'images1-focus-opensocial.googleusercontent.com',
+            'images2-focus-opensocial.googleusercontent.com',
+            'images3-focus-opensocial.googleusercontent.com',
+            'images4-focus-opensocial.googleusercontent.com',
+            'images5-focus-opensocial.googleusercontent.com',
+            'images6-focus-opensocial.googleusercontent.com',
+            'images7-focus-opensocial.googleusercontent.com',
+            'images8-focus-opensocial.googleusercontent.com',
+            'images9-focus-opensocial.googleusercontent.com',
+            'images10-focus-opensocial.googleusercontent.com'
+        );
     }
 
     /**
@@ -179,7 +201,9 @@ class ImageHelper
         $html = '';
         if ($server === 'full') {
             foreach (self::googleGadgetsProxyServerList() as $proxy) {
-                $html .= "<link href='//" . trim($proxy) . "-focus-opensocial.googleusercontent.com' rel='dns-prefetch' />" . PHP_EOL;
+                $html .= "<link href='//" . trim(
+                        $proxy
+                    ) . "-focus-opensocial.googleusercontent.com' rel='dns-prefetch' />" . PHP_EOL;
             }
         } else {
             $html .= "<link href='//images1-focus-opensocial.googleusercontent.com' rel='dns-prefetch' />" . PHP_EOL;
@@ -207,10 +231,27 @@ class ImageHelper
         $host = isset($url['host']) ? $url['host'] : '';
         $port = isset($url['port']) ? $url['port'] : '';
 
+        // Check Image Host
         if (empty($host)) {
             return trim($imageUrl);
         }
 
+        // Check Image file extension
+        $imagePathInfo = pathinfo($imageUrl);
+        $imageExtension = $imagePathInfo['extension'];
+        $jetpackSupportedExtensions = [
+            'jpg',
+            'jpeg',
+            'png',
+            'gif',
+            'webp'
+        ];
+
+        if (!in_array($imageExtension, $jetpackSupportedExtensions)) {
+            return trim($url);
+        }
+
+        // Check Proxy Server list
         if (in_array($host, self::wordpressProxyProxyServerList())) {
             return trim($url);
         }
@@ -284,7 +325,9 @@ class ImageHelper
     public static function createThumbnail($url = '', $width = 100, $height = 100)
     {
         try {
-            if (function_exists('base_url') && function_exists('config_item') && class_exists('nguyenanhung\MyImage\ImageCache')) {
+            if (function_exists('base_url') && function_exists('config_item') && class_exists(
+                    'nguyenanhung\MyImage\ImageCache'
+                )) {
                 $tmpPath = config_item('image_tmp_path');
                 $storagePath = config_item('base_storage_path');
                 $cache = new \nguyenanhung\MyImage\ImageCache();
@@ -300,7 +343,11 @@ class ImageHelper
             return $url;
         } catch (Exception $e) {
             if (function_exists('log_message')) {
-                log_message('error', "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine() . " - Message: " . $e->getMessage());
+                log_message(
+                    'error',
+                    "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine(
+                    ) . " - Message: " . $e->getMessage()
+                );
             }
 
             return $url;
@@ -352,7 +399,11 @@ class ImageHelper
             return $url;
         } catch (Exception $e) {
             if (function_exists('log_message')) {
-                log_message('error', "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine() . " - Message: " . $e->getMessage());
+                log_message(
+                    'error',
+                    "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine(
+                    ) . " - Message: " . $e->getMessage()
+                );
             }
             return $url;
         }
@@ -396,14 +447,20 @@ class ImageHelper
                 if (trim(mb_substr($images_url, 0, 12)) === 'crawler-news') {
                     $images_url = trim('uploads/' . $images_url);
                 }
-                $images_url = str_replace(array('upload-vcms/news/news/', 'upload-vcms/mheath/mheath/'), array('upload-vcms/news/', 'upload-vcms/mheath/'), $images_url);
+                $images_url = str_replace(array('upload-vcms/news/news/', 'upload-vcms/mheath/mheath/'),
+                    array('upload-vcms/news/', 'upload-vcms/mheath/'),
+                    $images_url);
                 return config_item('static_url') . $images_url;
             }
 
             return $images_url;
         } catch (Exception $e) {
             if (function_exists('log_message')) {
-                log_message('error', "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine() . " - Message: " . $e->getMessage());
+                log_message(
+                    'error',
+                    "Error Code: " . $e->getCode() . " - File: " . $e->getFile() . " - Line: " . $e->getLine(
+                    ) . " - Message: " . $e->getMessage()
+                );
             }
             return $input;
         }
