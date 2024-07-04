@@ -239,21 +239,17 @@ class ImageHelper
         // Check Image file extension
         $imagePathInfo = pathinfo($imageUrl);
         $imageExtension = $imagePathInfo['extension'];
-        $jetpackSupportedExtensions = [
-            'jpg',
-            'jpeg',
-            'png',
-            'gif',
-            'webp'
+        $jetpackBlockExtensions = [
+            'svg',
         ];
 
-        if (!in_array($imageExtension, $jetpackSupportedExtensions)) {
-            return trim($url);
+        if (in_array($imageExtension, $jetpackBlockExtensions)) {
+            return trim($imageUrl);
         }
 
         // Check Proxy Server list
         if (in_array($host, self::wordpressProxyProxyServerList())) {
-            return trim($url);
+            return trim($imageUrl);
         }
 
         if ($schema === 'http' && (!empty($port) && $port != 80)) {
