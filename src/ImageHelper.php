@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '1.0.16';
+    const VERSION = '1.0.17';
 
     /**
      * Function getVersion
@@ -238,7 +238,11 @@ class ImageHelper
 
         // Check Image file extension
         $imagePathInfo = pathinfo($imageUrl);
-        $imageExtension = $imagePathInfo['extension'];
+        if (isset($imagePathInfo['extension'])) {
+            $imageExtension = $imagePathInfo['extension'];
+        } else {
+            $imageExtension = null;
+        }
         $jetpackBlockExtensions = [
             'svg',
         ];
