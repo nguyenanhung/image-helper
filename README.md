@@ -2,7 +2,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)
 [![Daily Downloads](https://img.shields.io/packagist/dd/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)
 [![Monthly Downloads](https://img.shields.io/packagist/dm/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)
-[![License](https://img.shields.io/packagist/l/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)nguyenanhung/image-helper
+[![License](https://img.shields.io/packagist/l/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)
 [![PHP Version Require](https://img.shields.io/packagist/dependency-v/nguyenanhung/image-helper/php)](https://packagist.org/packages/nguyenanhung/image-helper)
 
 # Image Helper
