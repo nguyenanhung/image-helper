@@ -1,4 +1,9 @@
-[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/image-helper/v)](https://packagist.org/packages/nguyenanhung/image-helper) [![Total Downloads](http://poser.pugx.org/nguyenanhung/image-helper/downloads)](https://packagist.org/packages/nguyenanhung/image-helper) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/image-helper/v/unstable)](https://packagist.org/packages/nguyenanhung/image-helper) [![License](http://poser.pugx.org/nguyenanhung/image-helper/license)](https://packagist.org/packages/nguyenanhung/image-helper) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/image-helper/require/php)](https://packagist.org/packages/nguyenanhung/image-helper)
+[![Latest Stable Version](https://img.shields.io/packagist/v/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)
+[![Total Downloads](https://img.shields.io/packagist/dt/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)
+[![Daily Downloads](https://img.shields.io/packagist/dd/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)
+[![License](https://img.shields.io/packagist/l/nguyenanhung/image-helper.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/image-helper)nguyenanhung/image-helper
+[![PHP Version Require](https://img.shields.io/packagist/dependency-v/nguyenanhung/image-helper/php)](https://packagist.org/packages/nguyenanhung/image-helper)
 
 # Image Helper
 
