@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists('google_image_resize')) {
     /**
      * Function google_image_resize
@@ -63,6 +64,28 @@ if (!function_exists('wordpress_proxy_dns_prefetch')) {
     function wordpress_proxy_dns_prefetch(): string
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::wordpressProxyDnsPrefetch();
+    }
+}
+if (!function_exists('cloudflare_image_proxy')) {
+    /**
+     * Function cloudflare_image_proxy
+     *
+     * @param $imageUrl
+     * @param $width
+     * @param $height
+     * @param $quality
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return string
+     */
+    function cloudflare_image_proxy($imageUrl = '', $width = null, $height = null, $quality = null)
+    {
+        return nguyenanhung\Libraries\ImageHelper\ImageHelper::cloudFlareImageTransform(
+            $imageUrl,
+            $width,
+            $height,
+            $quality
+        );
     }
 }
 if (!function_exists('bear_framework_image_url')) {
