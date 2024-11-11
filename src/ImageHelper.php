@@ -21,7 +21,7 @@ use Exception;
  */
 class ImageHelper
 {
-    const VERSION = '1.0.17';
+    const VERSION = '1.0.18';
 
     /**
      * Function getVersion
@@ -308,6 +308,39 @@ class ImageHelper
             $html .= "<link href='//" . trim($server) . ".wp.com' rel='dns-prefetch' />" . PHP_EOL;
         }
         return $html;
+    }
+
+    /**
+     * Function cloudFlareImageTransform
+     *
+     * @param $imageUrl
+     * @param $width
+     * @param $height
+     * @param $quality
+     * User: 713uk13m <dev@nguyenanhung.com>
+     * Copyright: 713uk13m <dev@nguyenanhung.com>
+     * @return string
+     * @see https://developers.cloudflare.com/images/transform-images/transform-via-url/
+     */
+    public static function cloudFlareImageTransform($imageUrl = '', $width = null, $height = null, $quality = null)
+    {
+        if (empty($quality)) {
+            $quality = 80;
+        }
+        $options = '';
+        if (!empty($width)) {
+            $options .= 'width=' . $width . ',';
+        }
+        if (!empty($height)) {
+            $options .= 'height=' . $height . ',';
+        }
+        if (!empty($quality)) {
+            $options .= 'quality=' . $quality . ',';
+        }
+        if (!empty($options)) {
+            $options = trim($options, ',');
+        }
+        return '/cdn-cgi/image/' . trim($options) . '/' . trim($imageUrl);
     }
 
     /**
