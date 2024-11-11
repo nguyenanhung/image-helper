@@ -66,9 +66,9 @@ if (!function_exists('wordpress_proxy_dns_prefetch')) {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::wordpressProxyDnsPrefetch();
     }
 }
-if (!function_exists('cloudflare_image_transform')) {
+if (!function_exists('cloudflare_image_proxy')) {
     /**
-     * Function cloudflare_image_transform
+     * Function cloudflare_image_proxy
      *
      * @param $imageUrl
      * @param $width
@@ -78,7 +78,7 @@ if (!function_exists('cloudflare_image_transform')) {
      * Copyright: 713uk13m <dev@nguyenanhung.com>
      * @return string
      */
-    function cloudflare_image_transform($imageUrl = '', $width = null, $height = null, $quality = null)
+    function cloudflare_image_proxy($imageUrl = '', $width = null, $height = null, $quality = null)
     {
         return nguyenanhung\Libraries\ImageHelper\ImageHelper::cloudFlareImageTransform(
             $imageUrl,
